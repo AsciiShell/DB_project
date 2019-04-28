@@ -1,3 +1,4 @@
+sh ./schemas/build.sh
 for entry in `ls ./main*.tex`
 do
   xelatex -synctex=1 -interaction=nonstopmode $entry

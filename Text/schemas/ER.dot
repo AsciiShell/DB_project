@@ -1,0 +1,52 @@
+graph ERD {
+
+  //graph [ ranksep="0"];
+  //    node [shape=plain]
+  //   rankdir=LR;
+  //graph [splines=ortho, nodesep=1]
+  User [ label="Пользователь" shape = "box" ];
+  Course [ label="Курс" shape = "box" ];
+  Block [ label="Блок" shape = "box" ];
+  Task [ label="Проверочная работы" shape = "box" ];
+  Solution [ label="Решение" shape = "box" ];
+  Lecture [ label="Лекция" shape = "box" ];
+
+  UserCourseSolve [ label="Проходить" shape = "diamond" ];
+  UserCourseControl [ label="Управлять" shape = "diamond" ];
+  UserCourseCheck [ label="Проверять" shape = "diamond" ];
+  CourseBlock [ label="Состоит" shape = "diamond" ];
+  BlockLecture [ label="Состоит" shape = "diamond" ];
+  BlockTask [ label="Состоит" shape = "diamond" ];
+  LectureUser [ label="Проходить" shape = "diamond" ];
+  TaskSolution [ label="Принадлежит" shape = "diamond" ];
+  UserSolutionSolve [ label="Решать" shape = "diamond" ];
+  UserSolutionCheck [ label="Проверять" shape = "diamond" ];
+  
+  User -- UserCourseSolve[label = N];
+  UserCourseSolve -- Course[label = M]; 
+  User -- UserCourseControl[label = N];
+  UserCourseControl-- Course[color="black:invis:black" label=M] ; 
+  User -- UserCourseCheck[label = N];
+  UserCourseCheck -- Course[label = N]; 
+  User -- UserSolutionSolve[label = N];
+  UserSolutionSolve -- Solution[label = N];
+  User -- UserSolutionCheck[label = N];
+  UserSolutionCheck -- Solution[label = N];
+  User -- LectureUser[label = N];
+  LectureUser -- Lecture[label = M];
+  
+  Course -- CourseBlock[label = 1];
+  CourseBlock -- Block[color = "black:invis:black" label=N] ; 
+  
+  Block -- BlockLecture[label = 1];
+  Block -- BlockTask[label = 1];
+  
+  BlockLecture -- Lecture[color = "black:invis:black" label=N] ; 
+  BlockTask -- Task[color = "black:invis:black" label=N] ; 
+  
+  Task -- TaskSolution[label = 1];
+  TaskSolution -- Solution[color = "black:invis:black" label=N] ; 
+  //Solution -- UserSolutionSolve -- User;
+  //Solution -- UserSolutionCheck -- User;
+  
+}
