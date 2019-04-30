@@ -1,14 +1,13 @@
 graph ERD {
 
   //graph [ ranksep="0"];
-  //    node [shape=plain]
-  //   rankdir=LR;
-  //graph [splines=ortho, nodesep=1]
+  //rankdir=LR;
+
   User [ label="Пользователь" shape = "box" ];
   Course [ label="Курс" shape = "box" ];
   Block [ label="Блок" shape = "box" ];
   Task [ label="Проверочная работы" shape = "box" ];
-  Solution [ label="Решение" shape = "box" ];
+  Solution [ label="Попытка" shape = "box" ];
   Lecture [ label="Лекция" shape = "box" ];
 
   UserCourseSolve [ label="Проходить" shape = "diamond" ];
@@ -22,15 +21,19 @@ graph ERD {
   UserSolutionSolve [ label="Решать" shape = "diamond" ];
   UserSolutionCheck [ label="Проверять" shape = "diamond" ];
   
+  //{rank = same; UserCourseSolve; UserCourseControl; UserCourseCheck; LectureUser; UserSolutionSolve; UserSolutionCheck;}
+  //{rank = same; Block;Task;}
+  //{rank = same; CourseBlock;BlockLecture;BlockTask;}
+  
   User -- UserCourseSolve[label = N];
   UserCourseSolve -- Course[label = M]; 
   User -- UserCourseControl[label = N];
   UserCourseControl-- Course[color="black:invis:black" label=M] ; 
   User -- UserCourseCheck[label = N];
-  UserCourseCheck -- Course[label = N]; 
-  User -- UserSolutionSolve[label = N];
+  UserCourseCheck -- Course[label = M]; 
+  User -- UserSolutionSolve[label = 1];
   UserSolutionSolve -- Solution[label = N];
-  User -- UserSolutionCheck[label = N];
+  User -- UserSolutionCheck[label = 1];
   UserSolutionCheck -- Solution[label = N];
   User -- LectureUser[label = N];
   LectureUser -- Lecture[label = M];
@@ -38,15 +41,12 @@ graph ERD {
   Course -- CourseBlock[label = 1];
   CourseBlock -- Block[color = "black:invis:black" label=N] ; 
   
-  Block -- BlockLecture[label = 1];
-  Block -- BlockTask[label = 1];
+  BlockLecture -- Block[label = 1];
+  BlockTask -- Block[label = 1];
   
-  BlockLecture -- Lecture[color = "black:invis:black" label=N] ; 
-  BlockTask -- Task[color = "black:invis:black" label=N] ; 
+  Lecture -- BlockLecture [color = "black:invis:black" label=N] ; 
+  Task -- BlockTask[color = "black:invis:black" label=N] ; 
   
-  Task -- TaskSolution[label = 1];
-  TaskSolution -- Solution[color = "black:invis:black" label=N] ; 
-  //Solution -- UserSolutionSolve -- User;
-  //Solution -- UserSolutionCheck -- User;
-  
+  TaskSolution -- Task[label = 1];
+  Solution -- TaskSolution[color = "black:invis:black" label=N] ; 
 }
