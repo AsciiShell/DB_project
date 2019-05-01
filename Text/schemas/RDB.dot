@@ -1,0 +1,33 @@
+digraph ERD {
+  graph [   rankdir = "LR" ];
+  ranksep=2;
+
+  User [ label="{<F> Пользователь}" shape = "record" ];
+  Course [ label="{<F> Курс}" shape = "record" ];
+  Block [ label="{<F> Блок}" shape = "record" ];
+  Task [ label="{<F> Проверочные\l работы}" shape = "record" ];
+  Solution [ label="{<F> Попытка}" shape = "record" ];
+  Lecture [ label="{<F> Лекция}" shape = "record" ];
+  CourseTeachers [ label="{<F> Преподаватели \l курсов}" shape = "record" ];
+  CourseAssistent [ label="{<F> Ассистенты \l курсов}" shape = "record" ];
+  CourseStudents [ label="{<F> Ученики \l курсов}" shape = "record" ];
+  LectureReaded [ label="{<F> Прочитанные \l лекции}" shape = "record" ];
+ 
+  User->CourseStudents [arrowhead = crowodot];
+  User->CourseTeachers [arrowhead = crowodot];
+  User->CourseAssistent [arrowhead = crowodot];
+  
+  Course->CourseStudents [arrowhead = crowodot];
+  Course->CourseTeachers [arrowhead = crowtee];
+  Course->CourseAssistent [arrowhead = crowodot];
+  
+  Course->Block[arrowhead = crowtee];
+  Block->Lecture[arrowhead = crowtee];
+  Block->Task[arrowhead = crowtee];
+  Task->Solution[arrowhead = crowtee];
+  User->Solution[arrowhead = crowodot];
+  User->Solution[arrowhead = crowodot];
+  
+  User->LectureReaded[arrowhead = crowodot];
+  Lecture->LectureReaded[arrowhead = crowodot];
+}
