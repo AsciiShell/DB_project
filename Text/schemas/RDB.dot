@@ -1,6 +1,5 @@
 digraph ERD {
-  graph [   rankdir = "LR" ];
-  ranksep=2;
+  ranksep=1;
 
   User [ label="{<F> Пользователь}" shape = "record" ];
   Course [ label="{<F> Курс}" shape = "record" ];
@@ -8,26 +7,21 @@ digraph ERD {
   Task [ label="{<F> Проверочные\l работы}" shape = "record" ];
   Solution [ label="{<F> Попытка}" shape = "record" ];
   Lecture [ label="{<F> Лекция}" shape = "record" ];
-  CourseTeachers [ label="{<F> Преподаватели \l курсов}" shape = "record" ];
-  CourseAssistent [ label="{<F> Ассистенты \l курсов}" shape = "record" ];
-  CourseStudents [ label="{<F> Ученики \l курсов}" shape = "record" ];
+  CourseEnroll [ label="{<F> Участие&nbsp;в\l курсе}" shape = "record" ];
   LectureReaded [ label="{<F> Прочитанные \l лекции}" shape = "record" ];
  
-  User->CourseStudents [arrowhead = crowodot];
-  User->CourseTeachers [arrowhead = crowodot];
-  User->CourseAssistent [arrowhead = crowodot];
+  User->CourseEnroll [arrowhead = crowotee, arrowtail = noneodot, dir=both];
+  User->LectureReaded[arrowhead = crowotee, arrowtail = noneodot, dir=both];
+  User->Solution[arrowhead = crowotee, arrowtail = noneodot, dir=both];
+  User->Solution[arrowhead = crowodot, arrowtail = noneodot, dir=both];
   
-  Course->CourseStudents [arrowhead = crowodot];
-  Course->CourseTeachers [arrowhead = crowtee];
-  Course->CourseAssistent [arrowhead = crowodot];
+  Solution->Task[arrowhead = noneodot, arrowtail = crowotee, dir=both];
+  CourseEnroll->Course [arrowhead = noneodot, arrowtail = crowotee, dir=both];
+  LectureReaded->Lecture[arrowhead = noneodot, arrowtail = crowotee, dir=both];
   
-  Course->Block[arrowhead = crowtee];
-  Block->Lecture[arrowhead = crowtee];
-  Block->Task[arrowhead = crowtee];
-  Task->Solution[arrowhead = crowtee];
-  User->Solution[arrowhead = crowodot];
-  User->Solution[arrowhead = crowodot];
+  Task->Block[arrowhead = noneodot, arrowtail = crowotee, dir=both];
+  Course->Block[arrowhead = crowotee, arrowtail = noneodot, dir=both];
+  Lecture->Block[arrowhead = noneodot, arrowtail = crowotee, dir=both];
   
-  User->LectureReaded[arrowhead = crowodot];
-  Lecture->LectureReaded[arrowhead = crowodot];
+  { rank=same; Solution CourseEnroll LectureReaded }
 }
