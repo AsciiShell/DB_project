@@ -126,11 +126,14 @@
 Потенциальными ключами отношения ПОЛЬЗОВАТЕЛЬ являются поля логин и адрес электронной почты. Все они занимают достаточно много места. Введём суррогатный первичный ключ Номер пользователя.
 
 \begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:UserV1} Схема отношения ПОЛЬЗОВАТЕЛЬ (User) }
+	\end{flushleft}
 \begin{tabular}{|l|l|c|l|}
 	\hline
 	Содержание поля        & Имя поля & Тип, длина & Примечания                     \\ \hline
 	Номер пользователя     &          &    N(4)    & суррогатный первичный ключ     \\ \hline
-	Фамилия, имя, отчество &          &    V(100)    & обязательное поле              \\ \hline
+	Фамилия, имя, отчество &          &   V(100)   & обязательное поле              \\ \hline
 	Дата рождения          &          &    Date    & обязательное поле              \\ \hline
 	Пол                    &          &    C(1)    & обязательное поле, 'м' или 'ж' \\ \hline
 	Логин                  &          &   V(30)    & обязательное поле              \\ \hline
@@ -144,6 +147,9 @@
 Потенциальным ключом отношения КУРС является поле название. Оно занимает достаточно много места. Введём суррогатный первичный ключ номер курса.
 
 \begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:CourseV1} Схема отношения КУРС (Course) }
+	\end{flushleft}
 	\begin{tabular}{|l|l|c|l|}
 		\hline
 		Содержание поля & Имя поля & Тип, длина & Примечания                       \\ \hline
@@ -159,6 +165,9 @@
 У отношения БЛОК нет потенциального ключа, поэтому введём суррогатный первичный ключ номер блока.
 
 \begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:BlockV1} Схема отношения КУРС (Block) }
+	\end{flushleft}
 	\begin{tabular}{|l|l|c|l|}
 		\hline
 		Содержание поля & Имя поля & Тип, длина & Примечания                       \\ \hline
@@ -173,6 +182,9 @@
 У отношения ЛЕКЦИЯ нет потенциального ключа, поэтому введём суррогатный первичный ключ номер лекции.
 
 \begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:LectureV1} Схема отношения ЛЕКЦИЯ (Lecture) }
+	\end{flushleft}
 	\begin{tabular}{|l|l|c|l|}
 		\hline
 		Содержание поля   & Имя поля & Тип, длина & Примечания                       \\ \hline
@@ -188,7 +200,10 @@
 У отношения ПРОВЕРОЧНЫЙ МАТЕРИАЛ нет потенциального ключа, поэтому введём суррогатный первичный ключ номер проверочного материала.
 
 \begin{table}[H]
-	\begin{adjustbox}{width=\linewidth}
+	\begin{flushleft} 
+		\tablecaption{\label{tab:TestMaterialV1} Схема отношения ПРОВЕРОЧНЫЙ МАТЕРИАЛ (TestMaterial) }
+	\end{flushleft}
+\begin{adjustbox}{width=\linewidth}
 	\begin{tabular}{|l|l|c|l|}
 		\hline
 		Содержание поля              & Имя поля & Тип, длина & Примечания                       \\ \hline
@@ -207,6 +222,9 @@
 У отношения РЕШЕНИЕ нет потенциального ключа, поэтому введём суррогатный первичный ключ номер решения.
 
 \begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:DecisionV1} Схема отношения РЕШЕНИЕ (Decision) }
+	\end{flushleft}
 	\begin{tabular}{|l|l|c|l|}
 		\hline
 		Содержание поля & Имя поля & Тип, длина & Примечания                       \\ \hline
@@ -214,6 +232,26 @@
 		Содержание      &          &    TEXT    & обязательное поле                \\ \hline
 		Оценка          &          &    N(4)    &                                  \\ \hline
 		Дата сдачи      &          &    Date    & обязательное поле, default NOW() \\ \hline
+	\end{tabular}
+\end{table}
+
+%7. Участие. Атрибуты: роль, номер пользователь, номер курса.
+
+У отношения УЧАСТИЕ нет потенциального ключа, поэтому введём суррогатный первичный ключ номер решения.
+
+\begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:ParticipationV1} Схема отношения УЧАСТИЕ (Participation) }
+	\end{flushleft}
+	\begin{tabular}{|l|l|c|l|l|}
+		\hline
+		Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
+		Роль &  & С(10) & \multicolumn{2}{l|}{обязательное поле} \\ \hline
+		Номер пользователя &  & N(4) & \begin{tabular}[c]{@{}l@{}}
+			  внешний ключ   \\
+			(к User)
+		\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}составной\\ первичный \\ ключ\end{tabular}} \\ \cline{1-4}
+		Номер курса &  & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Course)\end{tabular} &  \\ \hline
 	\end{tabular}
 \end{table}
 
