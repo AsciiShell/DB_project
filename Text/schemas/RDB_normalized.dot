@@ -13,19 +13,19 @@ digraph ERD {
   CourseEnroll [ label="{<F> Участие&nbsp;в\l курсе}" shape = "record" ];
   LectureReaded [ label="{<F> Прочитанные \l лекции}" shape = "record" ];
  
-  User->CourseEnroll [arrowhead = crowotee, arrowtail = noneodot, dir=both];
-  User->LectureReaded[arrowhead = crowotee, arrowtail = noneodot, dir=both];
-  User->Solution[arrowhead = crowotee, arrowtail = noneodot, dir=both];
+  User->CourseEnroll [arrowhead = crowodot, arrowtail = noneotee, dir=both];
+  User->LectureReaded[arrowhead = crowodot, arrowtail = noneotee, dir=both];
   User->Solution[arrowhead = crowodot, arrowtail = noneodot, dir=both];
+  User->Solution[arrowhead = crowodot, arrowtail = noneotee, dir=both];
   
-  Solution->Task[arrowhead = noneodot, arrowtail = crowotee, dir=both];
-  CourseEnroll->Course [arrowhead = noneodot, arrowtail = crowotee, dir=both];
-  LectureReaded->Lecture[arrowhead = noneodot, arrowtail = crowotee, dir=both];
+  Solution->Task[arrowhead = noneotee, arrowtail = crowodot, dir=both];
+  CourseEnroll->Course [arrowhead = noneotee, arrowtail = crowodot, dir=both];
+  LectureReaded->Lecture[arrowhead = noneotee, arrowtail = crowodot, dir=both];
   
-  Task->Block[arrowhead = noneodot, arrowtail = crowotee, dir=both];
-  Course->Block[arrowhead = crowotee, arrowtail = noneodot, dir=both];
-  Lecture->Block[arrowhead = noneodot, arrowtail = crowotee, dir=both];
+  Task->Block[arrowhead = noneotee, arrowtail = crowodot, dir=both];
+  Course->Block[arrowhead = crowodot, arrowtail = noneotee, dir=both];
+  Lecture->Block[arrowhead = noneotee, arrowtail = crowodot, dir=both];
   
-  Course->CourseCategory[arrowhead = crowotee, arrowtail = noneodot, dir=both];
-  Category->CourseCategory[arrowhead = crowotee, arrowtail = noneodot, dir=both];
+  Course->CourseCategory[arrowhead = crowodot, arrowtail = noneotee, dir=both];
+  Category->CourseCategory[arrowhead = crowodot, arrowtail = noneotee, dir=both];
 }
