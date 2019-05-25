@@ -3,6 +3,9 @@ digraph ERD {
 
   User [ label="{<F> Пользователь}" shape = "record" ];
   Course [ label="{<F> Курс}" shape = "record" ];
+  CourseCategory [ label="{<F> Категории\l курса}" shape = "record" ];
+  Category [ label="{<F> Категория}" shape = "record" ];
+  
   Block [ label="{<F> Блок}" shape = "record" ];
   Task [ label="{<F> Проверочные\l работы}" shape = "record" ];
   Solution [ label="{<F> Попытка}" shape = "record" ];
@@ -23,5 +26,6 @@ digraph ERD {
   Course->Block[arrowhead = crowodot, arrowtail = noneotee, dir=both];
   Lecture->Block[arrowhead = noneotee, arrowtail = crowodot, dir=both];
   
-  { rank=same; Solution CourseEnroll LectureReaded }
+  Course->CourseCategory[arrowhead = crowodot, arrowtail = noneotee, dir=both];
+  Category->CourseCategory[arrowhead = crowodot, arrowtail = noneotee, dir=both];
 }
