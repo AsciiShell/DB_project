@@ -121,22 +121,29 @@
 
 \subsection{Составление реляционных отношений}
 
+%TAGS: U, C, B, L, T, A, P, LR
+
 %1. Пользователь. Атрибуты: ФИО, логин, пароль, пол, почта;
 
 Потенциальными ключами отношения ПОЛЬЗОВАТЕЛЬ являются поля логин и адрес электронной почты. Все они занимают достаточно много места. Введём суррогатный первичный ключ Номер пользователя.
 
 \begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:UserV1} Схема отношения ПОЛЬЗОВАТЕЛЬ (User) }
+	\end{flushleft}
+\begin{adjustbox}{width=\linewidth}
 \begin{tabular}{|l|l|c|l|}
 	\hline
-	Содержание поля        & Имя поля & Тип, длина & Примечания                     \\ \hline
-	Номер пользователя     &          &    N(4)    & суррогатный первичный ключ     \\ \hline
-	Фамилия, имя, отчество &          &    TEXT    & обязательное поле              \\ \hline
-	Дата рождения          &          &    Date    & обязательное поле              \\ \hline
-	Пол                    &          &    C(1)    & обязательное поле, 'м' или 'ж' \\ \hline
-	Логин                  &          &   V(30)    & обязательное поле              \\ \hline
-	Почта                  &          &   V(30)    & обязательное поле              \\ \hline
-	Пароль                 &          &   V(30)    & обязательное поле              \\ \hline
+	Содержание поля        & Имя поля  & Тип, длина & Примечания                          \\ \hline
+	Номер пользователя     & U\_ID     &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+	Фамилия, имя, отчество & U\_FIO    &   V(100)   & обязательное поле                   \\ \hline
+	Дата рождения          & U\_BORN   &    Date    & обязательное поле                   \\ \hline
+	Пол                    & U\_GENDER &    C(1)    & обязательное поле, 'м' или 'ж'      \\ \hline
+	Логин                  & U\_LOGIN  &   V(30)    & обязательное поле, уникальное поле  \\ \hline
+	Почта                  & U\_MAIL   &   V(30)    & обязательное поле, уникальное поле  \\ \hline
+	Пароль                 & U\_PASS   &   V(30)    & обязательное поле                   \\ \hline
 \end{tabular}
+\end{adjustbox}
 \end{table}
 
 %2. Курс. Атрибуты: названия, категория, видимость;
@@ -144,14 +151,19 @@
 Потенциальным ключом отношения КУРС является поле название. Оно занимает достаточно много места. Введём суррогатный первичный ключ номер курса.
 
 \begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:CourseV1} Схема отношения КУРС (Course) }
+	\end{flushleft}
+\begin{adjustbox}{width=\linewidth}
 	\begin{tabular}{|l|l|c|l|}
 		\hline
-		Содержание поля & Имя поля & Тип, длина & Примечания                       \\ \hline
-		Номер курса     &          &    N(4)    & суррогатный первичный ключ       \\ \hline
-		Название        &          &    TEXT    & обязательное поле                \\ \hline
-		Категория       &          &    TEXT    & обязательное поле                \\ \hline
-		Видимость       &          &    BOOL    & обязательное поле, default FALSE \\ \hline
+		Содержание поля & Имя поля     & Тип, длина & Примечания                          \\ \hline
+		Номер курса     & C\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Название        & C\_NAME       &   V(100)   & обязательное поле                   \\ \hline
+		Категории       & C\_CATEGORY   &   V(100)   & обязательное поле                   \\ \hline
+		Видимость       & C\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
 	\end{tabular}
+\end{adjustbox}
 \end{table}
 
 %3. Блок. Атрибуты: тема, видимость;
@@ -159,13 +171,19 @@
 У отношения БЛОК нет потенциального ключа, поэтому введём суррогатный первичный ключ номер блока.
 
 \begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:BlockV1} Схема отношения БЛОК (Block) }
+	\end{flushleft}
+\begin{adjustbox}{width=\linewidth}
 	\begin{tabular}{|l|l|c|l|}
 		\hline
-		Содержание поля & Имя поля & Тип, длина & Примечания                       \\ \hline
-		Номер блока     &          &    N(4)    & суррогатный первичный ключ       \\ \hline
-		Тема            &          &    TEXT    & обязательное поле                \\ \hline
-		Видимость       &          &    BOOL    & обязательное поле, default FALSE \\ \hline
+		Содержание поля & Имя поля      & Тип, длина & Примечания                          \\ \hline
+		Номер блока     & B\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Тема            & B\_THEME      &   V(100)   & обязательное поле                   \\ \hline
+		Видимость       & B\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
+		Курс            & B\_COURSE     &    N(4)    & внешний ключ (к Course)             \\ \hline
 	\end{tabular}
+\end{adjustbox}
 \end{table}
 
 %4. Лекция. Атрибуты: название, содержание, продолжительность, видимость;
@@ -173,47 +191,331 @@
 У отношения ЛЕКЦИЯ нет потенциального ключа, поэтому введём суррогатный первичный ключ номер лекции.
 
 \begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:LectureV1} Схема отношения ЛЕКЦИЯ (Lecture) }
+	\end{flushleft}
+\begin{adjustbox}{width=\linewidth}
 	\begin{tabular}{|l|l|c|l|}
 		\hline
-		Содержание поля   & Имя поля & Тип, длина & Примечания                       \\ \hline
-		Номер лекции      &          &    N(4)    & суррогатный первичный ключ       \\ \hline
-		Название          &          &    TEXT    & обязательное поле                \\ \hline
-		Содержание        &          &    TEXT    &                                  \\ \hline
-		Продолжительность &          &    N(8)    &                                  \\ \hline
-		Видимость         &          &    BOOL    & обязательное поле, default FALSE \\ \hline
+		Содержание поля   & Имя поля      & Тип, длина & Примечания                          \\ \hline
+		Номер лекции      & L\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Название          & L\_NAME       &   V(100)   & обязательное поле                   \\ \hline
+		Содержание        & L\_CONTENT    &    TEXT    &                                     \\ \hline
+		Продолжительность & L\_DURATION   &  INTERVAL  &                                     \\ \hline
+		Видимость         & L\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
+		Блок              & L\_BLOCK      &    N(4)    & внешний ключ (к Block)              \\ \hline
 	\end{tabular}
+\end{adjustbox}
 \end{table}
 %5. Проверочный материал. Атрибуты: название, максимальный балл, продолжительность, видимость;
 
 У отношения ПРОВЕРОЧНЫЙ МАТЕРИАЛ нет потенциального ключа, поэтому введём суррогатный первичный ключ номер проверочного материала.
 
 \begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:TestMaterialV1} Схема отношения ПРОВЕРОЧНЫЙ МАТЕРИАЛ (TestMaterial) }
+	\end{flushleft}
+\begin{adjustbox}{width=\linewidth}
 	\begin{tabular}{|l|l|c|l|}
 		\hline
-		Содержание поля              & Имя поля & Тип, длина & Примечания                       \\ \hline
-		Номер проверочного материала &          &    N(4)    & суррогатный первичный ключ       \\ \hline
-		Название                     &          &    TEXT    & обязательное поле                \\ \hline
-		Задание                      &          &    TEXT    &                                  \\ \hline
-		Максимальный балл            &          &    N(4)    & обязательное поле                \\ \hline
-		Продолжительность            &          &    N(8)    &                                  \\ \hline
-		Видимость                    &          &    BOOL    & обязательное поле, default FALSE \\ \hline
+		Содержание поля              & Имя поля     & Тип, длина & Примечания                          \\ \hline
+		Номер проверочного материала & T\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Название                     & T\_NAME       &   V(100)   & обязательное поле                   \\ \hline
+		Задание                      & T\_TASK       &    TEXT    & обязательное поле                   \\ \hline
+		Максимальный балл            & T\_MAX        &    N(4)    & обязательное поле                   \\ \hline
+		Продолжительность            & T\_DURATION   &  INTERVAL  &                                     \\ \hline
+		Видимость                    & T\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
+		Блок                         & T\_BLOCK      &    N(4)    & внешний ключ (к Block)              \\ \hline
 	\end{tabular}
+\end{adjustbox}
 \end{table}
 
 %6. Решение. Атрибуты: содержание, оценка.
 
-У отношения РЕШЕНИЕ нет потенциального ключа, поэтому введём суррогатный первичный ключ номер решения.
+У отношения ПОПЫТКА нет потенциального ключа, поэтому введём суррогатный первичный ключ номер решения.
 
 \begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:AttemptV1} Схема отношения ПОПЫТКА (Attempt) }
+	\end{flushleft}
+\begin{adjustbox}{width=\linewidth}
 	\begin{tabular}{|l|l|c|l|}
 		\hline
-		Содержание поля & Имя поля & Тип, длина & Примечания                       \\ \hline
-		Номер решения   &          &    N(4)    & суррогатный первичный ключ       \\ \hline
-		Содержание      &          &    TEXT    &                                  \\ \hline
-		Оценка          &          &    N(4)    & обязательное поле                \\ \hline
-		Сделано         &          &    Bool    & обязательное поле, default FALSE \\ \hline
-		Дата сдачи      &          &    Date    & обязательное поле, default NOW() \\ \hline
+		Содержание поля & Имя поля   & Тип, длина & Примечания                          \\ \hline
+		Номер решения   & A\_ID      &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Содержание      & A\_CONTENT &    TEXT    & обязательное поле                   \\ \hline
+		Оценка          & A\_MARK    &    N(4)    &                                     \\ \hline
+		Дата сдачи      & A\_DATE    &    Date    & обязательное поле, default NOW()    \\ \hline
+		Автор попытки   & A\_AUTHOR  &    N(4)    & внешний ключ (к User)               \\ \hline
+		Проверяющий     & A\_CHECKER &    N(4)    & внешний ключ (к User)               \\ \hline
+		Номер задания   & A\_TASK    &    N(4)    & внешний ключ (к TestMaterial)       \\ \hline
 	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+%7. Участие. Атрибуты: роль, номер пользователь, номер курса.
+
+Вспомогательное отношение УЧАСТИЕ, первичным ключом является комбинация двух полей этого отношения. Можно вообще не вводить первичный ключ для данного отношения, т.к. на него никто не ссылается. Но уникальность этой комбинации является в данном случае ограничением целостности данных, поэтому мы возьмём эту комбинацию в качестве первичного ключа соответствующего отношения.
+
+\begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:ParticipationV1} Схема отношения УЧАСТИЕ (Participation) }
+	\end{flushleft}
+\begin{adjustbox}{width=\linewidth}
+	\begin{tabular}{|l|l|c|l|l|}
+		\hline
+		Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
+		Роль & P\_ROLE & С(10) & \multicolumn{2}{l|}{обязательное поле} \\ \hline
+		Номер пользователя & P\_USER & N(4) & \begin{tabular}[c]{@{}l@{}}
+			  внешний ключ   \\
+			(к User)
+		\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
+		Номер курса & P\_COURSE & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Course)\end{tabular} &  \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+%8.  ПРОЧИТАННЫЕ ЛЕКЦИИ. Атрибуты: номер пользователя, номер лекции.
+
+Вспомогательное отношение  ПРОЧИТАННЫЕ ЛЕКЦИИ, первичным ключом является комбинация двух полей этого отношения. Можно вообще не вводить первичный ключ для данного отношения, т.к. на него никто не ссылается. Но уникальность этой комбинации является в данном случае ограничением целостности данных, поэтому мы возьмём эту комбинацию в качестве первичного ключа соответствующего отношения.
+
+\begin{table}[H]
+	
+	\begin{flushleft} 
+		\tablecaption{\label{tab:LectionReadV1} Схема отношения ПРОЧИТАННЫЕ ЛЕКЦИИ (LectionRead) }
+	\end{flushleft}
+	\begin{adjustbox}{width=\linewidth}
+	\begin{tabular}{|l|l|c|l|l|}
+		\hline
+		Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
+		Номер пользователя & LR\_USER & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к User)\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
+		Номер лекции & LR\_NUMLECTURE & N(4) & \begin{tabular}[c]{@{}l@{}}
+			  внешний ключ    \\
+			(к номер Lecture)
+		\end{tabular} &  \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+\subsection{Нормализация полученных отношений (до 4НФ)}
+
+\textbf{1НФ}
+Для приведения к первой нормальной форме значение многозначного поля «Категории» в отошении КУРС было вынесено в отдельное справочное отношение. Помимо этого поле «ФИО» в отношении ПОЛЬЗОВАЕТЛЬ было разделено на 3 поля: обязательное «Фамилия», обязательное «Имя» и необязательное «Отчество».
+
+\textbf{2НФ}
+Базу данных не требуется приводить ко второй нормальной форме, так как все отношения, имеющие составные первичные ключи, удовлетворяют условию второй нормальной формы.
+
+\textbf{3НФ}
+Для приведение к 3НФ необходимо выявить транзитивные зависимости. Транзитивная зависимость выяалена для «Продолжительность» из отношения ЛЕКЦИЯ. Продолжительность лекции зависит от объема информации в поле «Содержание», значит можно убрать поле «Продолжительность» и создать представление, отражающие время изучения лекции.
+
+\textbf{4НФ}
+Приведение к 4НФ не требуется, так как во всех отношениях отсутствуют нетривиальные многозначные зависимости, значит все отношения удовлетворяют условию 4НФ.
+
+
+\subsection{Полученные после нормализации отншения}
+
+
+%TAGS: U, C, B, L, T, A, P, LR, CT
+
+%1. Пользователь
+
+\begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:UserV2} Схема отношения ПОЛЬЗОВАТЕЛЬ (User) }
+	\end{flushleft}
+	\begin{adjustbox}{width=\linewidth}
+		\begin{tabular}{|l|l|c|l|}
+			\hline
+			Содержание поля    & Имя поля  & Тип, длина & Примечания                          \\ \hline
+			Номер пользователя & U\_ID     &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+			Фамилия            & U\_LNAME  &   V(30)    & обязательное поле                   \\ \hline
+			Имя                & U\_FNAME  &   V(30)    & обязательное поле                   \\ \hline
+			Отчество           & U\_PATRO  &   V(30)    &                                     \\ \hline
+			Дата рождения      & U\_BORN   &    Date    & обязательное поле                   \\ \hline
+			Пол                & U\_GENDER &    C(1)    & обязательное поле, 'м' или 'ж'      \\ \hline
+			Логин              & U\_LOGIN  &   V(30)    & обязательное поле, уникальное поле  \\ \hline
+			Почта              & U\_MAIL   &   V(30)    & обязательное поле, уникальное поле  \\ \hline
+			Пароль             & U\_PASS   &   V(30)    & обязательное поле                   \\ \hline
+		\end{tabular}
+	\end{adjustbox}
+\end{table}
+
+%2. КУРС
+
+\begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:CourseV2} Схема отношения КУРС (Course) }
+	\end{flushleft}
+\begin{adjustbox}{width=\linewidth}
+	\begin{tabular}{|l|l|c|l|}
+		\hline
+		Содержание поля & Имя поля     & Тип, длина & Примечания                          \\ \hline
+		Номер курса     & C\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Название        & C\_NAME       &   V(100)   & обязательное поле                   \\ \hline
+		%Категории       & C\_CATEGORY   &   V(100)   & обязательное поле                   \\ \hline
+		Видимость       & C\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+%3. КАТЕГОРИЯ. справочная таблица
+
+У справочного отношения КАТЕГОРИЯ есть потенциальный первичный ключ «Название категории», но название категории может меняться, поэтому введём суррогатный первичный ключ номер категории.
+
+\begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:CategoryV2} Схема отношения КАТЕГОРИЯ (Category) }
+	\end{flushleft}
+\begin{adjustbox}{width=\linewidth}
+	\begin{tabular}{|l|l|c|l|}
+		\hline
+		Содержание поля    & Имя поля & Тип, длина & Примечания                          \\ \hline
+		Номер категории    & CT\_ID   &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Название категории & CT\_NAME &   V(30)    & обязательное поле                   \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+%4. КАТЕГОРИЯ КУРСА, номер курса, номер категории
+
+Вспомогательное отношение  КАТЕГОРИЯ КУРСА, первичным ключом является комбинация двух полей этого отношения. Можно вообще не вводить первичный ключ для данного отношения, т.к. на него никто не ссылается. Но уникальность этой комбинации является в данном случае ограничением целостности данных, поэтому мы возьмём эту комбинацию в качестве первичного ключа соответствующего отношения.
+
+\begin{table}[H]
+	
+	\begin{flushleft} 
+		\tablecaption{\label{tab:CategoryCourseV2} Схема отношения КАТЕГОРИЯ КУРСА (CategoryCourse) }
+	\end{flushleft}
+	\begin{adjustbox}{width=\linewidth}
+		\begin{tabular}{|l|l|c|l|l|}
+			\hline
+			Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
+			Номер курса & CC\_COURSE & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Course)\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
+			Номер категории & CC\_CATEGORY & N(4) & \begin{tabular}[c]{@{}l@{}}
+				  внешний ключ    \\
+				(к номер Category)
+			\end{tabular} &  \\ \hline
+		\end{tabular}
+	\end{adjustbox}
+\end{table}
+
+%5 Блок. Атрибуты: тема, видимость;
+
+\begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:BlockV2} Схема отношения БЛОК (Block) }
+	\end{flushleft}
+	\begin{adjustbox}{width=\linewidth}
+		\begin{tabular}{|l|l|c|l|}
+			\hline
+			Содержание поля & Имя поля & Тип, длина & Примечания                          \\ \hline
+			Номер блока     &  B\_ID        &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+			Тема            &  B\_THEME        &   V(100)   & обязательное поле                   \\ \hline
+			Видимость       &  B\_VISIBILITY        &    BOOL    & обязательное поле, default FALSE    \\ \hline
+			Курс            &  B\_COURSE        &    N(4)    & внешний ключ (к Course)             \\ \hline
+		\end{tabular}
+	\end{adjustbox}
+\end{table}
+
+%6. Лекция. Атрибуты: название, содержание, продолжительность, видимость;
+
+\begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:LectureV2} Схема отношения ЛЕКЦИЯ (Lecture) }
+	\end{flushleft}
+	\begin{adjustbox}{width=\linewidth}
+		\begin{tabular}{|l|l|c|l|}
+			\hline
+			Содержание поля   & Имя поля      & Тип, длина & Примечания                          \\ \hline
+			Номер лекции      & L\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+			Название          & L\_NAME       &   V(100)   & обязательное поле                   \\ \hline
+			Содержание        & L\_CONTENT    &    TEXT    &                                     \\ \hline
+			%Продолжительность & L\_DURATION   &  INTERVAL  &                                     \\ \hline
+			Видимость         & L\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
+			Блок              & L\_BLOCK      &    N(4)    & внешний ключ (к Block)              \\ \hline
+		\end{tabular}
+	\end{adjustbox}
+\end{table}
+
+%7. Проверочный материал. Атрибуты: название, максимальный балл, продолжительность, видимость;
+
+\begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:TestMaterialV2} Схема отношения ПРОВЕРОЧНЫЙ МАТЕРИАЛ (TestMaterial) }
+	\end{flushleft}
+	\begin{adjustbox}{width=\linewidth}
+		\begin{tabular}{|l|l|c|l|}
+			\hline
+			Содержание поля              & Имя поля     & Тип, длина & Примечания                          \\ \hline
+			Номер проверочного материала & T\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+			Название                     & T\_NAME       &   V(100)   & обязательное поле                   \\ \hline
+			Задание                      & T\_TASK       &    TEXT    & обязательное поле                   \\ \hline
+			Максимальный балл            & T\_MAX        &    N(4)    & обязательное поле                   \\ \hline
+			Продолжительность            & T\_DURATION   &  INTERVAL  &                                     \\ \hline
+			Видимость                    & T\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
+			Блок                         & T\_BLOCK      &    N(4)    & внешний ключ (к Block)              \\ \hline
+		\end{tabular}
+	\end{adjustbox}
+\end{table}
+
+%8. Решение. Атрибуты: содержание, оценка.
+
+\begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:AttemptV2} Схема отношения ПОПЫТКА (Attempt) }
+	\end{flushleft}
+	\begin{adjustbox}{width=\linewidth}
+		\begin{tabular}{|l|l|c|l|}
+			\hline
+			Содержание поля & Имя поля   & Тип, длина & Примечания                          \\ \hline
+			Номер решения   & A\_ID      &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+			Содержание      & A\_CONTENT &    TEXT    & обязательное поле                   \\ \hline
+			Оценка          & A\_MARK    &    N(4)    &                                     \\ \hline
+			Дата сдачи      & A\_DATE    &    Date    & обязательное поле, default NOW()    \\ \hline
+			Автор попытки   & A\_AUTHOR  &    N(4)    & внешний ключ (к User)               \\ \hline
+			Проверяющий     & A\_CHECKER &    N(4)    & внешний ключ (к User)               \\ \hline
+			Номер задания   & A\_TASK    &    N(4)    & внешний ключ (к TestMaterial)       \\ \hline
+		\end{tabular}
+	\end{adjustbox}
+\end{table}
+
+%9. Участие. Атрибуты: роль, номер пользователь, номер курса.
+
+\begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:ParticipationV2} Схема отношения УЧАСТИЕ (Participation) }
+	\end{flushleft}
+	\begin{adjustbox}{width=\linewidth}
+		\begin{tabular}{|l|l|c|l|l|}
+			\hline
+			Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
+			Роль & P\_ROLE & С(10) & \multicolumn{2}{l|}{обязательное поле} \\ \hline
+			Номер пользователя & P\_USER & N(4) & \begin{tabular}[c]{@{}l@{}}
+				внешний ключ   \\
+				(к User)
+			\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
+			Номер курса & P\_COURSE & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Course)\end{tabular} &  \\ \hline
+		\end{tabular}
+	\end{adjustbox}
+\end{table}
+
+%10.  ПРОЧИТАННЫЕ ЛЕКЦИИ. Атрибуты: номер пользователя, номер лекции.
+
+\begin{table}[H]
+	\begin{flushleft} 
+		\tablecaption{\label{tab:LectionReadV2} Схема отношения ПРОЧИТАННЫЕ ЛЕКЦИИ (LectionRead) }
+	\end{flushleft}
+	\begin{adjustbox}{width=\linewidth}
+		\begin{tabular}{|l|l|c|l|l|}
+			\hline
+			Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
+			Номер пользователя & LR\_USER & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к User)\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
+			Номер лекции & LR\_NUMLECTURE & N(4) & \begin{tabular}[c]{@{}l@{}}
+				внешний ключ    \\
+				(к номер Lecture)
+			\end{tabular} &  \\ \hline
+		\end{tabular}
+	\end{adjustbox}
 \end{table}
 
 
