@@ -48,3 +48,11 @@ SELECT *
 FROM attempt
 WHERE a_author = userid();
 COMMENT ON VIEW my_attempts IS 'Список попыток пользователя';
+-------------------------------------------------------------------------
+CREATE OR REPLACE VIEW my_read_lectures AS
+SELECT lecture.*
+FROM lecture
+         JOIN lectureread on l_id = lr_numlecture
+WHERE lr_client = userid();
+COMMENT ON VIEW my_read_lectures IS 'Список прочитанных лекций';
+-------------------------------------------------------------------------
