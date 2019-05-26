@@ -10,12 +10,12 @@ SELECT *
 FROM public_user
          INNER JOIN participation ON id = p_client
 WHERE p_role = 'Assistant';
-COMMENT ON VIEW course_teachers IS 'Представление ассистентов курса';
+COMMENT ON VIEW course_assistant IS 'Представление ассистентов курса';
 -------------------------------------------------------------------------
 CREATE OR REPLACE VIEW course_student AS
 SELECT *
 FROM public_user
          INNER JOIN participation ON id = p_client
 WHERE p_role = 'Student';
-COMMENT ON VIEW course_teachers IS 'Представление студентов курса';
+COMMENT ON VIEW course_student IS 'Представление студентов курса';
 -------------------------------------------------------------------------
