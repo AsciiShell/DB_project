@@ -129,7 +129,7 @@
 
 \begin{table}[H]
 	\begin{flushleft} 
-		\tablecaption{\label{tab:UserV1} Схема отношения ПОЛЬЗОВАТЕЛЬ (User) }
+		\tablecaption{\label{tab:ClientV1} Схема отношения ПОЛЬЗОВАТЕЛЬ (Client) }
 	\end{flushleft}
 \begin{adjustbox}{width=\linewidth}
 \begin{tabular}{|l|l|c|l|}
@@ -246,8 +246,8 @@
 		Содержание      & A\_CONTENT &    TEXT    & обязательное поле                   \\ \hline
 		Оценка          & A\_MARK    &    N(4)    &                                     \\ \hline
 		Дата сдачи      & A\_DATE    &    Date    & обязательное поле, default NOW()    \\ \hline
-		Автор попытки   & A\_AUTHOR  &    N(4)    & внешний ключ (к User)               \\ \hline
-		Проверяющий     & A\_CHECKER &    N(4)    & внешний ключ (к User)               \\ \hline
+		Автор попытки   & A\_AUTHOR  &    N(4)    & внешний ключ (к Client)               \\ \hline
+		Проверяющий     & A\_CHECKER &    N(4)    & внешний ключ (к Client)               \\ \hline
 		Номер задания   & A\_TASK    &    N(4)    & внешний ключ (к TestMaterial)       \\ \hline
 	\end{tabular}
 \end{adjustbox}
@@ -266,9 +266,9 @@
 		\hline
 		Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
 		Роль & P\_ROLE & С(10) & \multicolumn{2}{l|}{обязательное поле} \\ \hline
-		Номер пользователя & P\_USER & N(4) & \begin{tabular}[c]{@{}l@{}}
+		Номер пользователя & P\_CLIENT & N(4) & \begin{tabular}[c]{@{}l@{}}
 			  внешний ключ   \\
-			(к User)
+			(к Client)
 		\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
 		Номер курса & P\_COURSE & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Course)\end{tabular} &  \\ \hline
 	\end{tabular}
@@ -288,7 +288,7 @@
 	\begin{tabular}{|l|l|c|l|l|}
 		\hline
 		Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
-		Номер пользователя & LR\_USER & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к User)\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
+		Номер пользователя & LR\_CLIENT & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Client)\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
 		Номер лекции & LR\_NUMLECTURE & N(4) & \begin{tabular}[c]{@{}l@{}}
 			  внешний ключ    \\
 			(к номер Lecture)
@@ -322,7 +322,7 @@
 
 \begin{table}[H]
 	\begin{flushleft} 
-		\tablecaption{\label{tab:UserV2} Схема отношения ПОЛЬЗОВАТЕЛЬ (User) }
+		\tablecaption{\label{tab:ClientV2} Схема отношения ПОЛЬЗОВАТЕЛЬ (Client) }
 	\end{flushleft}
 	\begin{adjustbox}{width=\linewidth}
 		\begin{tabular}{|l|l|c|l|}
@@ -472,8 +472,8 @@
 			Содержание      & A\_CONTENT &    TEXT    & обязательное поле                   \\ \hline
 			Оценка          & A\_MARK    &    N(4)    &                                     \\ \hline
 			Дата сдачи      & A\_DATE    &    Date    & обязательное поле, default NOW()    \\ \hline
-			Автор попытки   & A\_AUTHOR  &    N(4)    & внешний ключ (к User)               \\ \hline
-			Проверяющий     & A\_CHECKER &    N(4)    & внешний ключ (к User)               \\ \hline
+			Автор попытки   & A\_AUTHOR  &    N(4)    & внешний ключ (к Client)               \\ \hline
+			Проверяющий     & A\_CHECKER &    N(4)    & внешний ключ (к Client)               \\ \hline
 			Номер задания   & A\_TASK    &    N(4)    & внешний ключ (к TestMaterial)       \\ \hline
 		\end{tabular}
 	\end{adjustbox}
@@ -490,9 +490,9 @@
 			\hline
 			Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
 			Роль & P\_ROLE & С(10) & \multicolumn{2}{l|}{обязательное поле} \\ \hline
-			Номер пользователя & P\_USER & N(4) & \begin{tabular}[c]{@{}l@{}}
+			Номер пользователя & P\_CLIENT & N(4) & \begin{tabular}[c]{@{}l@{}}
 				внешний ключ   \\
-				(к User)
+				(к Client)
 			\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
 			Номер курса & P\_COURSE & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Course)\end{tabular} &  \\ \hline
 		\end{tabular}
@@ -509,7 +509,7 @@
 		\begin{tabular}{|l|l|c|l|l|}
 			\hline
 			Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
-			Номер пользователя & LR\_USER & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к User)\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
+			Номер пользователя & LR\_CLIENT & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Client)\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
 			Номер лекции & LR\_NUMLECTURE & N(4) & \begin{tabular}[c]{@{}l@{}}
 				внешний ключ    \\
 				(к номер Lecture)
@@ -572,6 +572,22 @@
 	 Прочитанные лекции  &       S       &       S       &            &   SI    \\ \hline
 \end{tabular}
 \end{table}
+
+\section{Реализация проекта базы данных}
+
+\subsection{Создание таблиц}
+
+{\small \verbatiminput{code/tab_client.sql}}
+{\small \verbatiminput{code/tab_course.sql}}
+{\small \verbatiminput{code/tab_category.sql}}
+{\small \verbatiminput{code/tab_categoryCourse.sql}}
+{\small \verbatiminput{code/tab_block.sql}}
+{\small \verbatiminput{code/tab_lecture.sql}}
+{\small \verbatiminput{code/tab_testMaterial.sql}}
+{\small \verbatiminput{code/tab_Attempt.sql}}
+{\small \verbatiminput{code/tab_participation.sql}}
+{\small \verbatiminput{code/tab_lectureRead.sql}}
+
 %\newpage 
 %\renewcommand{\refname}{{\normalsize СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}} 
 %\centering 

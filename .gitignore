@@ -67,4 +67,6 @@ fabric.properties
 
 *.docx
 
+\.idea/
+
 *.synctex(busy)
