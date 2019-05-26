@@ -588,6 +588,22 @@
 {\small \verbatiminput{code/tab_participation.sql}}
 {\small \verbatiminput{code/tab_lectureRead.sql}}
 
+\subsection{Создание представлений}
+
+Создадим функцию для получения идентификатора текущего пользователя.
+
+{\small \verbatiminput{code/fun_userID.sql}}
+
+Представления для безопасного получения информации пользователем:
+
+{\small \verbatiminput{code/view_my.sql}}
+Представления для безопасного получения информации о курсах и пользователях системы:
+
+{\small \verbatiminput{code/view_public.sql}}
+
+Представления для получение информации об участниках курсов с различными ролями:
+
+{\small \verbatiminput{code/view_course.sql}}
 %\newpage 
 %\renewcommand{\refname}{{\normalsize СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}} 
 %\centering 
