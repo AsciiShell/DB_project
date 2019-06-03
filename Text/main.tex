@@ -413,11 +413,12 @@
 	\begin{adjustbox}{width=\linewidth}
 		\begin{tabular}{|l|l|c|l|}
 			\hline
-			Содержание поля & Имя поля & Тип, длина & Примечания                          \\ \hline
-			Номер блока     &  B\_ID        &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
-			Тема            &  B\_THEME        &   V(100)   & обязательное поле                   \\ \hline
-			Видимость       &  B\_VISIBILITY        &    BOOL    & обязательное поле, default FALSE    \\ \hline
-			Курс            &  B\_COURSE        &    N(4)    & внешний ключ (к Course)             \\ \hline
+			Содержание поля & Имя поля      & Тип, длина & Примечания                          \\ \hline
+			Номер блока     & B\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+			Тема            & B\_THEME      &   V(100)   & обязательное поле                   \\ \hline
+			Видимость       & B\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
+			Курс            & B\_COURSE     &    N(4)    & внешний ключ (к Course)             \\ \hline
+			Следующее поле  & B\_NEXT\_ID   &    N(4)    & внешний ключ (к Block)              \\ \hline
 		\end{tabular}
 	\end{adjustbox}
 \end{table}
@@ -431,16 +432,22 @@
 	\begin{adjustbox}{width=\linewidth}
 		\begin{tabular}{|l|l|c|l|}
 			\hline
-			Содержание поля   & Имя поля      & Тип, длина & Примечания                          \\ \hline
-			Номер лекции      & L\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
-			Название          & L\_NAME       &   V(100)   & обязательное поле                   \\ \hline
-			Содержание        & L\_CONTENT    &    TEXT    &                                     \\ \hline
-			%Продолжительность & L\_DURATION   &  INTERVAL  &                                     \\ \hline
-			Видимость         & L\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
-			Блок              & L\_BLOCK      &    N(4)    & внешний ключ (к Block)              \\ \hline
+			Содержание поля                    & Имя поля                  & Тип, длина & Примечания                          \\ \hline
+			Номер лекции                       & L\_ID                     &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+			Название                           & L\_NAME                   &   V(100)   & обязательное поле                   \\ \hline
+			Содержание                         & L\_CONTENT                &    TEXT    &                                     \\ \hline
+			%Продолжительность                 & L\_DURATION               &  INTERVAL  &                                     \\ \hline
+			Видимость                          & L\_VISIBILITY             &    BOOL    & обязательное поле, default FALSE    \\ \hline
+			Блок                               & L\_BLOCK                  &    N(4)    & внешний ключ (к Block)              \\ \hline
+			\multirow{2}{*}{Следующий элемент} & L\_LECTURE\_NEXT\_ID      &    N(4)    & внешний ключ  (к Lecture)           \\ \cline{2-4}
+			                                   & L\_TESTMETERIAL\_NEXT\_ID &    N(4)    & внешний ключ (к TestMaterial)       \\ \hline
 		\end{tabular}
 	\end{adjustbox}
 \end{table}
+
+При этом должно выполняться следующее ограничение целостности: 
+
+L\_LECTURE\_NEXT\_ID IS NULL OR L\_TESTMETERIAL\_NEXT\_ID IS NUL
 
 %7. Проверочный материал. Атрибуты: название, максимальный балл, продолжительность, видимость;
 
@@ -449,19 +456,25 @@
 		\tablecaption{\label{tab:TestMaterialV2} Схема отношения ПРОВЕРОЧНЫЙ МАТЕРИАЛ (TestMaterial) }
 	\end{flushleft}
 	\begin{adjustbox}{width=\linewidth}
-		\begin{tabular}{|l|l|c|l|}
-			\hline
-			Содержание поля              & Имя поля     & Тип, длина & Примечания                          \\ \hline
-			Номер проверочного материала & T\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
-			Название                     & T\_NAME       &   V(100)   & обязательное поле                   \\ \hline
-			Задание                      & T\_TASK       &    TEXT    & обязательное поле                   \\ \hline
-			Максимальный балл            & T\_MAX        &    N(4)    & обязательное поле                   \\ \hline
-			Продолжительность            & T\_DURATION   &  INTERVAL  &                                     \\ \hline
-			Видимость                    & T\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
-			Блок                         & T\_BLOCK      &    N(4)    & внешний ключ (к Block)              \\ \hline
-		\end{tabular}
+\begin{tabular}{|l|l|c|l|}
+	\hline
+	Содержание поля                    & Имя поля                  & Тип, длина & Примечания                       \\ \hline
+	Номер проверочного материала       & T\_ID                     &    N(4)    & суррогатный первичный ключ       \\ \hline
+	Название                           & T\_NAME                   &   V(100)   & обязательное поле                \\ \hline
+	Задание                            & T\_TASK                   &    TEXT    & обязательное поле                \\ \hline
+	Максимальный балл                  & T\_MAX                    &    N(4)    & обязательное поле                \\ \hline
+	Продолжительность                  & T\_DURATION               &  INTERVAL  &                                  \\ \hline
+	Видимость                          & T\_VISIBILITY             &    BOOL    & обязательное поле, default FALSE \\ \hline
+	Блок                               & T\_BLOCK                  &    N(4)    & внешний ключ (к Block)           \\ \hline
+	\multirow{2}{*}{Следующий элемент} & T\_LECTURE\_NEXT\_ID      &    N(4)    & внешний ключ (к Lecture))        \\ \cline{2-4}
+	                                   & T\_TESTMETERIAL\_NEXT\_ID &    N(4)    & внешний ключ (к TestMaterial)    \\ \hline
+\end{tabular}
 	\end{adjustbox}
 \end{table}
+
+При этом должно выполняться следующее ограничение целостности: 
+
+T\_LECTURE\_NEXT\_ID IS NULL OR T\_TESTMETERIAL\_NEXT\_ID IS NULL.
 
 %8. Решение. Атрибуты: содержание, оценка.
 
