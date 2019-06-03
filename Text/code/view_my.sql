@@ -1,16 +1,33 @@
 CREATE OR REPLACE VIEW my_tests AS
-SELECT *
+SELECT c_id,
+       c_name,
+       b_id,
+       b_theme,
+       t_id,
+       t_name,
+       t_task,
+       t_max,
+       t_duration,
+       SUM(a_id)   as a_number_of_attempts,
+       MAX(a_mark) as a_max_mark
 FROM public_tests
-WHERE c_id IN (SELECT p_course
+         LEFT JOIN attempt ON t_id = a_task
+WHERE a_author = userid()
+  AND c_id IN (SELECT p_course
                FROM participation
-               WHERE p_client = userid());
+               WHERE p_client = userid())
+GROUP BY c_id, c_name, b_id, b_theme, t_id, t_name, t_task,
+         t_max, t_duration;
 COMMENT ON VIEW my_tests
     IS 'Список тестов, доступных пользователю';
 -------------------------------------------------------------------------
 CREATE OR REPLACE VIEW my_lectures AS
-SELECT *
+SELECT public_lectures.*,
+       lectureread.lr_numlecture IS NOT NULL as is_read
 FROM public_lectures
-WHERE c_id IN (SELECT p_course
+         LEFT JOIN lectureread ON l_id = lr_numlecture
+WHERE lr_client = userid()
+  AND c_id IN (SELECT p_course
                FROM participation
                WHERE p_client = userid());
 COMMENT ON VIEW my_lectures
