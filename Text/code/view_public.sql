@@ -25,8 +25,8 @@ SELECT c_id,
        t_max,
        t_duration
 FROM testmaterial
-         INNER JOIN Block ON t_block = b_id
-         INNER JOIN course ON b_course = c_id
+         RIGHT JOIN Block ON t_block = b_id
+         RIGHT JOIN course ON b_course = c_id
 WHERE c_visibility
   AND b_visibility
   AND t_visibility;
@@ -44,8 +44,8 @@ SELECT c_id,
        -- 25 - средняя скорость чтения символов в секунду
        make_interval(secs := char_length(l_content) / 25.0) as l_duration
 FROM lecture
-         INNER JOIN Block ON l_block = b_id
-         INNER JOIN course ON b_course = c_id
+         RIGHT JOIN Block ON l_block = b_id
+         RIGHT JOIN course ON b_course = c_id
 WHERE c_visibility
   AND b_visibility
   AND l_visibility;
