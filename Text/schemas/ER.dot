@@ -16,11 +16,8 @@ graph ERD {
   CourseBlock [ label="Состоит" shape = "diamond" ];
   BlockLecture [ label="Состоит" shape = "diamond" ];
   BlockTask [ label="Состоит" shape = "diamond" ];
-  BlockNext [ label="Следующий" shape = "diamond" ];
   LectureUser [ label="Проходить" shape = "diamond" ];
-  LectureNext [ label="Следующий" shape = "diamond" ];
   TaskSolution [ label="Принадлежит" shape = "diamond" ];
-  TaskNext [ label="Следующий" shape = "diamond" ];
   UserSolutionSolve [ label="Решать" shape = "diamond" ];
   UserSolutionCheck [ label="Проверять" shape = "diamond" ];
   
@@ -52,16 +49,4 @@ graph ERD {
   
   TaskSolution -- Task[label = 1];
   Solution -- TaskSolution[color = "black:invis:black" label=N] ; 
-  
-  // loopback TaskNext
-  Lecture -- LectureNext [label=1] ; 
-  LectureNext -- Lecture [label=1] ; 
-  LectureNext -- Task [label=1] ; 
-  
-  Task -- TaskNext [label=1] ; 
-  TaskNext -- Lecture [label=1] ; 
-  TaskNext -- Task [label=1] ; 
-  
-  Block -- BlockNext [label=1] ; 
-  BlockNext -- Block [label=1] ; 
 }
