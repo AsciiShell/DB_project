@@ -14,3 +14,9 @@ CREATE INDEX ON participation (p_course);
 
 CREATE INDEX ON lectureread (lr_client);
 CREATE INDEX ON lectureread (lr_numlecture);
+
+CREATE INDEX ON block (b_next_id);
+CREATE INDEX ON lecture (l_lecture_next_id);
+CREATE INDEX ON lecture (l_testmeterial_next_id);
+CREATE INDEX ON testmaterial (t_lecture_next_id);
+CREATE INDEX ON testmaterial (t_testmeterial_next_id);
