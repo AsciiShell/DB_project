@@ -411,8 +411,6 @@
 
 %5 Блок. Атрибуты: тема, видимость;
 
-Для определения последовательности блоков было добавлено поле с внешним ключом на эту же таблицу.
-
 \begin{table}[H]
 	\begin{flushleft} 
 		\tablecaption{\label{tab:BlockV2} Схема отношения БЛОК (Block) }
@@ -431,8 +429,6 @@
 \end{table}
 
 %6. Лекция. Атрибуты: название, содержание, продолжительность, видимость;
-
-При этом один из внешних ключей должен быть NULL.
 
 \begin{table}[H]
 	\begin{flushleft} 
@@ -453,10 +449,6 @@
 		\end{tabular}
 	\end{adjustbox}
 \end{table}
-
-При этом должно выполняться следующее ограничение целостности: 
-
-L\_LECTURE\_NEXT\_ID IS NULL OR L\_TESTMETERIAL\_NEXT\_ID IS NULL
 
 %7. Проверочный материал. Атрибуты: название, максимальный балл, продолжительность, видимость;
 
@@ -480,10 +472,6 @@ L\_LECTURE\_NEXT\_ID IS NULL OR L\_TESTMETERIAL\_NEXT\_ID IS NULL
 \end{tabular}
 	\end{adjustbox}
 \end{table}
-
-При этом должно выполняться следующее ограничение целостности: 
-
-T\_LECTURE\_NEXT\_ID IS NULL OR T\_TESTMETERIAL\_NEXT\_ID IS NULL.
 
 %8. Решение. Атрибуты: содержание, оценка.
 
