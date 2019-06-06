@@ -15,7 +15,9 @@ graph ERD {
   UserCourseCheck [ label="Проверять" shape = "diamond" ];
   CourseBlock [ label="Состоит" shape = "diamond" ];
   BlockLecture [ label="Состоит" shape = "diamond" ];
-  BlockTask [ label="Состоит" shape = "diamond" ];
+  LectureTask [ label="Расширяется до" shape = "diamond" ];
+  BlockNext [ label="Следующий" shape = "diamond" ];
+  LectureNext [ label="Следующий" shape = "diamond" ];
   LectureUser [ label="Проходить" shape = "diamond" ];
   TaskSolution [ label="Принадлежит" shape = "diamond" ];
   UserSolutionSolve [ label="Решать" shape = "diamond" ];
@@ -23,7 +25,7 @@ graph ERD {
   
   //{rank = same; UserCourseSolve; UserCourseControl; UserCourseCheck; LectureUser; UserSolutionSolve; UserSolutionCheck;}
   //{rank = same; Block;Task;}
-  //{rank = same; CourseBlock;BlockLecture;BlockTask;}
+  //{rank = same; CourseBlock;BlockLecture;LectureTask;}
   
   User -- UserCourseSolve[label = N];
   UserCourseSolve -- Course[label = M]; 
@@ -42,11 +44,18 @@ graph ERD {
   CourseBlock -- Block[color = "black:invis:black" label=N] ; 
   
   BlockLecture -- Block[label = 1];
-  BlockTask -- Block[label = 1];
+  Lecture -- LectureTask[label = 1];
   
   Lecture -- BlockLecture [color = "black:invis:black" label=N] ; 
-  Task -- BlockTask[color = "black:invis:black" label=N] ; 
+  LectureTask -- Task[color = "black:invis:black" label=1] ; 
   
   TaskSolution -- Task[label = 1];
   Solution -- TaskSolution[color = "black:invis:black" label=N] ; 
+  
+  // loopback TaskNext
+  Block -- BlockNext [label=1] ; 
+  BlockNext -- Block [label=1] ; 
+  
+  LectureNext -- Lecture [label=1] ; 
+  Lecture -- LectureNext [label=1] ; 
 }
