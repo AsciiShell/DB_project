@@ -19,9 +19,11 @@ digraph ERD {
   CourseEnroll->Course [arrowhead = noneotee, arrowtail = crowodot, dir=both];
   LectureReaded->Lecture[arrowhead = noneotee, arrowtail = crowodot, dir=both];
   
-  Task->Block[arrowhead = noneotee, arrowtail = crowodot, dir=both];
+  Task->Lecture [arrowhead = noneotee, arrowtail = noneodot, dir=both];
   Course->Block[arrowhead = crowodot, arrowtail = noneotee, dir=both];
   Lecture->Block[arrowhead = noneotee, arrowtail = crowodot, dir=both];
+  {rank=same; Solution LectureReaded CourseEnroll}
   
-  { rank=same; Solution CourseEnroll LectureReaded }
+  Block->Block [arrowhead = noneodot, arrowtail = noneodot, dir=both];
+  Lecture->Lecture [arrowhead = noneodot, arrowtail = noneodot, dir=both];
 }
