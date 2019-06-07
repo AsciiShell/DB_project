@@ -20,16 +20,17 @@ SELECT c_id,
        b_id,
        b_theme,
        t_id,
-       t_name,
-       t_task,
+       l_name    as t_name,
+       l_content as t_task,
        t_max,
        t_duration
-FROM testmaterial
-         RIGHT JOIN Block ON t_block = b_id
+FROM lecture
+         JOIN testmaterial ON l_extend = t_id
+         RIGHT JOIN Block ON l_block = b_id
          RIGHT JOIN course ON b_course = c_id
 WHERE c_visibility
   AND b_visibility
-  AND t_visibility;
+  AND l_visibility;
 COMMENT ON MATERIALIZED VIEW public_tests
     IS 'Список тестов, которые могут выполнить пользователи';
 -------------------------------------------------------------------------
