@@ -20,12 +20,12 @@ SELECT c_id,
        b_id,
        b_theme,
        t_id,
-       l_name    as t_name,
-       l_content as t_task,
+       t_name,
+       t_task,
        t_max,
        t_duration
-FROM lecture
-         JOIN testmaterial ON l_extend = t_id
+FROM testmaterial
+         JOIN lecture ON l_extend = t_id
          RIGHT JOIN Block ON l_block = b_id
          RIGHT JOIN course ON b_course = c_id
 WHERE c_visibility
