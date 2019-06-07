@@ -44,10 +44,10 @@ graph ERD {
   CourseBlock -- Block[color = "black:invis:black" label=N] ; 
   
   BlockLecture -- Block[label = 1];
-  Lecture -- LectureTask[label = 1];
+  Lecture -- LectureTask[color = "black:invis:black"  label = 1];
   
   Lecture -- BlockLecture [color = "black:invis:black" label=N] ; 
-  LectureTask -- Task[color = "black:invis:black" label=1] ; 
+  LectureTask -- Task[label=1] ; 
   
   TaskSolution -- Task[label = 1];
   Solution -- TaskSolution[color = "black:invis:black" label=N] ; 
