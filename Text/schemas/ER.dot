@@ -15,7 +15,7 @@ graph ERD {
   UserCourseCheck [ label="Проверять" shape = "diamond" ];
   CourseBlock [ label="Состоит" shape = "diamond" ];
   BlockLecture [ label="Состоит" shape = "diamond" ];
-  LectureTask [ label="Расширяется до" shape = "diamond" ];
+  LectureTask [ label="Продолжается" shape = "diamond" ];
   BlockNext [ label="Следующий" shape = "diamond" ];
   LectureNext [ label="Следующий" shape = "diamond" ];
   LectureUser [ label="Проходить" shape = "diamond" ];
