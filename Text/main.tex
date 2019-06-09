@@ -39,8 +39,8 @@
 \begin{enumerate}
 	\item \textbf{Пользователь}. Атрибуты: ФИО, логин, пароль, пол, почта;
 	\item \textbf{Курс}. Атрибуты: названия, категория, видимость;
-	\item \textbf{Блок}. Атрибуты: тема, видимость, следующий блок;
-	\item \textbf{Лекция}. Атрибуты: название, содержание, продолжительность, видимость, следующая лекция, проверочный материал к этой лекции;
+	\item \textbf{Блок}. Атрибуты: тема, видимость;
+	\item \textbf{Лекция}. Атрибуты: название, содержание, продолжительность, видимость;
 	\item \textbf{Проверочный материал}. Атрибуты: название, максимальный балл, продолжительность, видимость;
 	\item \textbf{Попытка}. Атрибуты: содержание, оценка.
 \end{enumerate}
@@ -188,7 +188,7 @@
 		Тема            & B\_THEME      &   V(100)   & обязательное поле                   \\ \hline
 		Видимость       & B\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
 		Курс            & B\_COURSE     &    N(4)    & внешний ключ (к Course)             \\ \hline
-		Следующий блок  & B\_NEXT\_ID   &    N(4)    & внешний ключ (к Block)              \\ \hline
+		Предыдущий блок  & B\_LAST\_ID   &    N(4)    & внешний ключ (к Block)              \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -211,8 +211,7 @@
 		Продолжительность    & L\_DURATION   &  INTERVAL  &                                     \\ \hline
 		Видимость            & L\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
 		Блок                 & L\_BLOCK      &    N(4)    & внешний ключ (к Block)              \\ \hline
-		Проверочный материал & L\_EXTEND     &    N(4)    & внешний ключ  (к TestMaterial)      \\ \hline
-		Следующая лекция     & L\_NEXT\_ID   &    N(4)    & внешний ключ    (к Lecture)         \\ \hline
+		Предыдущая лекция    & L\_LAST\_ID   &    N(4)    & внешний ключ    (к Lecture)         \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -234,6 +233,7 @@
 		Максимальный балл            & T\_MAX        &    N(4)    & обязательное поле                   \\ \hline
 		Продолжительность            & T\_DURATION   &  INTERVAL  &                                     \\ \hline
 		Видимость                    & T\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
+		Лекция                       & T\_EXTEND     &    N(4)    & внешний ключ  (к Lecture)      \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -421,7 +421,7 @@
 			Тема            & B\_THEME      &   V(100)   & обязательное поле                   \\ \hline
 			Видимость       & B\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
 			Курс            & B\_COURSE     &    N(4)    & внешний ключ (к Course)             \\ \hline
-			Следующий блок  & B\_NEXT\_ID   &    N(4)    & внешний ключ (к Block)              \\ \hline
+			Предыдущий блок  & B\_LAST\_ID   &    N(4)    & внешний ключ (к Block)              \\ \hline
 		\end{tabular}
 	\end{adjustbox}
 \end{table}
@@ -442,8 +442,7 @@
 			%Продолжительность   & L\_DURATION   &  INTERVAL  &                                     \\ \hline
 			Видимость            & L\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
 			Блок                 & L\_BLOCK      &    N(4)    & внешний ключ (к Block)              \\ \hline
-			Проверочный материал & L\_EXTEND     &    N(4)    & внешний ключ  (к TestMaterial)      \\ \hline
-			Следующая лекция     & L\_NEXT\_ID   &    N(4)    & внешний ключ    (к Lecture)         \\ \hline
+			Предыдущая лекция     & L\_LAST\_ID   &    N(4)    & внешний ключ    (к Lecture)         \\ \hline
 		\end{tabular}
 	\end{adjustbox}
 \end{table}
@@ -464,6 +463,7 @@
 	Максимальный балл            & T\_MAX        &    N(4)    & обязательное поле                \\ \hline
 	Продолжительность            & T\_DURATION   &  INTERVAL  &                                  \\ \hline
 	Видимость                    & T\_VISIBILITY &    BOOL    & обязательное поле, default FALSE \\ \hline
+	Лекция                       & T\_EXTEND     &    N(4)    & внешний ключ  (к Lecture)        \\ \hline
 \end{tabular}
 	\end{adjustbox}
 \end{table}
