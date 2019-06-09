@@ -25,11 +25,12 @@ SELECT c_id,
        t_max,
        t_duration
 FROM testmaterial
-         RIGHT JOIN Block ON t_block = b_id
+         JOIN lecture ON l_extend = t_id
+         RIGHT JOIN Block ON l_block = b_id
          RIGHT JOIN course ON b_course = c_id
 WHERE c_visibility
   AND b_visibility
-  AND t_visibility;
+  AND l_visibility;
 COMMENT ON MATERIALIZED VIEW public_tests
     IS 'Список тестов, которые могут выполнить пользователи';
 -------------------------------------------------------------------------

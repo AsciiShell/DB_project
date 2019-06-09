@@ -1,5 +1,5 @@
 digraph ERD {
-  //ranksep=1;
+  ranksep=1;
 
   User [ label="{<F> Пользователь}" shape = "record" ];
   Course [ label="{<F> Курс}" shape = "record" ];
@@ -22,18 +22,13 @@ digraph ERD {
   CourseEnroll->Course [arrowhead = noneotee, arrowtail = crowodot, dir=both];
   LectureReaded->Lecture[arrowhead = noneotee, arrowtail = crowodot, dir=both];
   
-  Task->Block[arrowhead = noneotee, arrowtail = crowodot, dir=both];
+  Task->Lecture [arrowhead = noneodot, arrowtail = noneotee, dir=both];
   Course->Block[arrowhead = crowodot, arrowtail = noneotee, dir=both];
   Lecture->Block[arrowhead = noneotee, arrowtail = crowodot, dir=both];
   
   Course->CourseCategory[arrowhead = crowodot, arrowtail = noneotee, dir=both];
   Category->CourseCategory[arrowhead = crowodot, arrowtail = noneotee, dir=both];
   
-  // loops
-  
   Block->Block [arrowhead = noneodot, arrowtail = noneodot, dir=both];
   Lecture->Lecture [arrowhead = noneodot, arrowtail = noneodot, dir=both];
-  Task->Lecture [arrowhead = noneodot, arrowtail = noneodot, dir=both];
-  Task->Lecture [arrowhead = noneodot, arrowtail = noneodot, dir=both];
-  Task->Task [arrowhead = noneodot, arrowtail = noneodot, dir=both];
 }
