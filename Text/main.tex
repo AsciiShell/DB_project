@@ -39,8 +39,8 @@
 \begin{enumerate}
 	\item \textbf{Пользователь}. Атрибуты: ФИО, логин, пароль, пол, почта;
 	\item \textbf{Курс}. Атрибуты: названия, категория, видимость;
-	\item \textbf{Блок}. Атрибуты: тема, видимость, следующий блок;
-	\item \textbf{Лекция}. Атрибуты: название, содержание, продолжительность, видимость, следующая лекция, проверочный материал к этой лекции;
+	\item \textbf{Блок}. Атрибуты: тема, видимость;
+	\item \textbf{Лекция}. Атрибуты: название, содержание, продолжительность, видимость;
 	\item \textbf{Проверочный материал}. Атрибуты: название, максимальный балл, продолжительность, видимость;
 	\item \textbf{Попытка}. Атрибуты: содержание, оценка.
 \end{enumerate}
@@ -127,6 +127,14 @@
 
 \subsection{Составление реляционных отношений}
 
+Введем следующие обозначения:
+
+\begin{itemize}
+	\item C(*) -- CHAR(*)
+	\item INT -- INTEGER
+	\item V(*) -- VARCHAR(*)
+\end{itemize}
+
 %TAGS: U, C, B, L, T, A, P, LR
 
 %1. Пользователь. Атрибуты: ФИО, логин, пароль, пол, почта;
@@ -141,7 +149,7 @@
 \begin{tabular}{|l|l|c|l|}
 	\hline
 	Содержание поля        & Имя поля  & Тип, длина & Примечания                          \\ \hline
-	Номер пользователя     & U\_ID     &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+	Номер пользователя     & U\_ID     &    INT    & \textbf{суррогатный первичный ключ} \\ \hline
 	Фамилия, имя, отчество & U\_FIO    &   V(100)   & обязательное поле                   \\ \hline
 	Дата рождения          & U\_BORN   &    Date    & обязательное поле                   \\ \hline
 	Пол                    & U\_GENDER &    C(1)    & обязательное поле, 'м' или 'ж'      \\ \hline
@@ -164,7 +172,7 @@
 	\begin{tabular}{|l|l|c|l|}
 		\hline
 		Содержание поля & Имя поля     & Тип, длина & Примечания                          \\ \hline
-		Номер курса     & C\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Номер курса     & C\_ID         &    INT    & \textbf{суррогатный первичный ключ} \\ \hline
 		Название        & C\_NAME       &   V(100)   & обязательное поле                   \\ \hline
 		Категории       & C\_CATEGORY   &   V(100)   & обязательное поле                   \\ \hline
 		Видимость       & C\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
@@ -184,11 +192,11 @@
 	\begin{tabular}{|l|l|c|l|}
 		\hline
 		Содержание поля & Имя поля      & Тип, длина & Примечания                          \\ \hline
-		Номер блока     & B\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Номер блока     & B\_ID         &    INT    & \textbf{суррогатный первичный ключ} \\ \hline
 		Тема            & B\_THEME      &   V(100)   & обязательное поле                   \\ \hline
 		Видимость       & B\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
-		Курс            & B\_COURSE     &    N(4)    & внешний ключ (к Course)             \\ \hline
-		Следующий блок  & B\_NEXT\_ID   &    N(4)    & внешний ключ (к Block)              \\ \hline
+		Курс            & B\_COURSE     &    INT    & внешний ключ (к Course)             \\ \hline
+		Предыдущий блок  & B\_LAST\_ID   &    INT    & внешний ключ (к Block)              \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -205,14 +213,13 @@
 	\begin{tabular}{|l|l|c|l|}
 		\hline
 		Содержание поля      & Имя поля      & Тип, длина & Примечания                          \\ \hline
-		Номер лекции         & L\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Номер лекции         & L\_ID         &    INT    & \textbf{суррогатный первичный ключ} \\ \hline
 		Название             & L\_NAME       &   V(100)   & обязательное поле                   \\ \hline
 		Содержание           & L\_CONTENT    &    TEXT    &                                     \\ \hline
 		Продолжительность    & L\_DURATION   &  INTERVAL  &                                     \\ \hline
 		Видимость            & L\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
-		Блок                 & L\_BLOCK      &    N(4)    & внешний ключ (к Block)              \\ \hline
-		Проверочный материал & L\_EXTEND     &    N(4)    & внешний ключ  (к TestMaterial)      \\ \hline
-		Следующая лекция     & L\_NEXT\_ID   &    N(4)    & внешний ключ    (к Lecture)         \\ \hline
+		Блок                 & L\_BLOCK      &    INT    & внешний ключ (к Block)              \\ \hline
+		Предыдущая лекция    & L\_LAST\_ID   &    INT    & внешний ключ    (к Lecture)         \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -228,12 +235,13 @@
 	\begin{tabular}{|l|l|c|l|}
 		\hline
 		Содержание поля              & Имя поля      & Тип, длина & Примечания                          \\ \hline
-		Номер проверочного материала & T\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Номер проверочного материала & T\_ID         &    INT    & \textbf{суррогатный первичный ключ} \\ \hline
 		Название                     & T\_NAME       &   V(100)   & обязательное поле                   \\ \hline
 		Задание                      & T\_TASK       &    TEXT    & обязательное поле                   \\ \hline
-		Максимальный балл            & T\_MAX        &    N(4)    & обязательное поле                   \\ \hline
+		Максимальный балл            & T\_MAX        &    INT    & обязательное поле                   \\ \hline
 		Продолжительность            & T\_DURATION   &  INTERVAL  &                                     \\ \hline
 		Видимость                    & T\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
+		Лекция                       & T\_EXTEND     &    INT    & внешний ключ  (к Lecture)      \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -250,13 +258,13 @@
 	\begin{tabular}{|l|l|c|l|}
 		\hline
 		Содержание поля & Имя поля   & Тип, длина & Примечания                          \\ \hline
-		Номер решения   & A\_ID      &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Номер решения   & A\_ID      &    INT    & \textbf{суррогатный первичный ключ} \\ \hline
 		Содержание      & A\_CONTENT &    TEXT    & обязательное поле                   \\ \hline
-		Оценка          & A\_MARK    &    N(4)    &                                     \\ \hline
+		Оценка          & A\_MARK    &    INT    &                                     \\ \hline
 		Дата сдачи      & A\_DATE    &    Date    & обязательное поле, default NOW()    \\ \hline
-		Автор попытки   & A\_AUTHOR  &    N(4)    & внешний ключ (к Client)               \\ \hline
-		Проверяющий     & A\_CHECKER &    N(4)    & внешний ключ (к Client)               \\ \hline
-		Номер задания   & A\_TASK    &    N(4)    & внешний ключ (к TestMaterial)       \\ \hline
+		Автор попытки   & A\_AUTHOR  &    INT    & внешний ключ (к Client)               \\ \hline
+		Проверяющий     & A\_CHECKER &    INT    & внешний ключ (к Client)               \\ \hline
+		Номер задания   & A\_TASK    &    INT    & внешний ключ (к TestMaterial)       \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -274,11 +282,11 @@
 		\hline
 		Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
 		Роль & P\_ROLE & С(10) & \multicolumn{2}{l|}{обязательное поле} \\ \hline
-		Номер пользователя & P\_CLIENT & N(4) & \begin{tabular}[c]{@{}l@{}}
+		Номер пользователя & P\_CLIENT & INT & \begin{tabular}[c]{@{}l@{}}
 			  внешний ключ   \\
 			(к Client)
 		\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
-		Номер курса & P\_COURSE & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Course)\end{tabular} &  \\ \hline
+		Номер курса & P\_COURSE & INT & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Course)\end{tabular} &  \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -296,8 +304,8 @@
 	\begin{tabular}{|l|l|c|l|l|}
 		\hline
 		Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
-		Номер пользователя & LR\_CLIENT & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Client)\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
-		Номер лекции & LR\_NUMLECTURE & N(4) & \begin{tabular}[c]{@{}l@{}}
+		Номер пользователя & LR\_CLIENT & INT & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Client)\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
+		Номер лекции & LR\_NUMLECTURE & INT & \begin{tabular}[c]{@{}l@{}}
 			  внешний ключ    \\
 			(к номер Lecture)
 		\end{tabular} &  \\ \hline
@@ -336,7 +344,7 @@
 		\begin{tabular}{|l|l|c|l|}
 			\hline
 			Содержание поля    & Имя поля  & Тип, длина & Примечания                          \\ \hline
-			Номер пользователя & U\_ID     &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+			Номер пользователя & U\_ID     &    INT    & \textbf{суррогатный первичный ключ} \\ \hline
 			Фамилия            & U\_LNAME  &   V(30)    & обязательное поле                   \\ \hline
 			Имя                & U\_FNAME  &   V(30)    & обязательное поле                   \\ \hline
 			Отчество           & U\_PATRO  &   V(30)    &                                     \\ \hline
@@ -359,7 +367,7 @@
 	\begin{tabular}{|l|l|c|l|}
 		\hline
 		Содержание поля & Имя поля     & Тип, длина & Примечания                          \\ \hline
-		Номер курса     & C\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Номер курса     & C\_ID         &    INT    & \textbf{суррогатный первичный ключ} \\ \hline
 		Название        & C\_NAME       &   V(100)   & обязательное поле                   \\ \hline
 		%Категории       & C\_CATEGORY   &   V(100)   & обязательное поле                   \\ \hline
 		Видимость       & C\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
@@ -379,7 +387,7 @@
 	\begin{tabular}{|l|l|c|l|}
 		\hline
 		Содержание поля    & Имя поля & Тип, длина & Примечания                          \\ \hline
-		Номер категории    & CT\_ID   &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+		Номер категории    & CT\_ID   &    INT    & \textbf{суррогатный первичный ключ} \\ \hline
 		Название категории & CT\_NAME &   V(30)    & обязательное поле                   \\ \hline
 	\end{tabular}
 \end{adjustbox}
@@ -398,8 +406,8 @@
 		\begin{tabular}{|l|l|c|l|l|}
 			\hline
 			Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
-			Номер курса & CC\_COURSE & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Course)\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
-			Номер категории & CC\_CATEGORY & N(4) & \begin{tabular}[c]{@{}l@{}}
+			Номер курса & CC\_COURSE & INT & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Course)\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
+			Номер категории & CC\_CATEGORY & INT & \begin{tabular}[c]{@{}l@{}}
 				  внешний ключ    \\
 				(к номер Category)
 			\end{tabular} &  \\ \hline
@@ -417,11 +425,11 @@
 		\begin{tabular}{|l|l|c|l|}
 			\hline
 			Содержание поля & Имя поля      & Тип, длина & Примечания                          \\ \hline
-			Номер блока     & B\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+			Номер блока     & B\_ID         &    INT    & \textbf{суррогатный первичный ключ} \\ \hline
 			Тема            & B\_THEME      &   V(100)   & обязательное поле                   \\ \hline
 			Видимость       & B\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
-			Курс            & B\_COURSE     &    N(4)    & внешний ключ (к Course)             \\ \hline
-			Следующий блок  & B\_NEXT\_ID   &    N(4)    & внешний ключ (к Block)              \\ \hline
+			Курс            & B\_COURSE     &    INT    & внешний ключ (к Course)             \\ \hline
+			Предыдущий блок  & B\_LAST\_ID   &    INT    & внешний ключ (к Block)              \\ \hline
 		\end{tabular}
 	\end{adjustbox}
 \end{table}
@@ -436,14 +444,13 @@
 		\begin{tabular}{|l|l|c|l|}
 			\hline
 			Содержание поля      & Имя поля      & Тип, длина & Примечания                          \\ \hline
-			Номер лекции         & L\_ID         &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+			Номер лекции         & L\_ID         &    INT    & \textbf{суррогатный первичный ключ} \\ \hline
 			Название             & L\_NAME       &   V(100)   & обязательное поле                   \\ \hline
 			Содержание           & L\_CONTENT    &    TEXT    &                                     \\ \hline
 			%Продолжительность   & L\_DURATION   &  INTERVAL  &                                     \\ \hline
 			Видимость            & L\_VISIBILITY &    BOOL    & обязательное поле, default FALSE    \\ \hline
-			Блок                 & L\_BLOCK      &    N(4)    & внешний ключ (к Block)              \\ \hline
-			Проверочный материал & L\_EXTEND     &    N(4)    & внешний ключ  (к TestMaterial)      \\ \hline
-			Следующая лекция     & L\_NEXT\_ID   &    N(4)    & внешний ключ    (к Lecture)         \\ \hline
+			Блок                 & L\_BLOCK      &    INT    & внешний ключ (к Block)              \\ \hline
+			Предыдущая лекция     & L\_LAST\_ID   &    INT    & внешний ключ    (к Lecture)         \\ \hline
 		\end{tabular}
 	\end{adjustbox}
 \end{table}
@@ -458,12 +465,13 @@
 \begin{tabular}{|l|l|c|l|}
 	\hline
 	Содержание поля              & Имя поля      & Тип, длина & Примечания                       \\ \hline
-	Номер проверочного материала & T\_ID         &    N(4)    & суррогатный первичный ключ       \\ \hline
+	Номер проверочного материала & T\_ID         &    INT    & суррогатный первичный ключ       \\ \hline
 	Название                     & T\_NAME       &   V(100)   & обязательное поле                \\ \hline
 	Задание                      & T\_TASK       &    TEXT    & обязательное поле                \\ \hline
-	Максимальный балл            & T\_MAX        &    N(4)    & обязательное поле                \\ \hline
+	Максимальный балл            & T\_MAX        &    INT    & обязательное поле                \\ \hline
 	Продолжительность            & T\_DURATION   &  INTERVAL  &                                  \\ \hline
 	Видимость                    & T\_VISIBILITY &    BOOL    & обязательное поле, default FALSE \\ \hline
+	Лекция                       & T\_EXTEND     &    INT    & внешний ключ  (к Lecture)        \\ \hline
 \end{tabular}
 	\end{adjustbox}
 \end{table}
@@ -478,13 +486,13 @@
 		\begin{tabular}{|l|l|c|l|}
 			\hline
 			Содержание поля & Имя поля   & Тип, длина & Примечания                          \\ \hline
-			Номер решения   & A\_ID      &    N(4)    & \textbf{суррогатный первичный ключ} \\ \hline
+			Номер решения   & A\_ID      &    INT    & \textbf{суррогатный первичный ключ} \\ \hline
 			Содержание      & A\_CONTENT &    TEXT    & обязательное поле                   \\ \hline
-			Оценка          & A\_MARK    &    N(4)    &                                     \\ \hline
+			Оценка          & A\_MARK    &    INT    &                                     \\ \hline
 			Дата сдачи      & A\_DATE    &    Date    & обязательное поле, default NOW()    \\ \hline
-			Автор попытки   & A\_AUTHOR  &    N(4)    & внешний ключ (к Client)               \\ \hline
-			Проверяющий     & A\_CHECKER &    N(4)    & внешний ключ (к Client)               \\ \hline
-			Номер задания   & A\_TASK    &    N(4)    & внешний ключ (к TestMaterial)       \\ \hline
+			Автор попытки   & A\_AUTHOR  &    INT    & внешний ключ (к Client)               \\ \hline
+			Проверяющий     & A\_CHECKER &    INT    & внешний ключ (к Client)               \\ \hline
+			Номер задания   & A\_TASK    &    INT    & внешний ключ (к TestMaterial)       \\ \hline
 		\end{tabular}
 	\end{adjustbox}
 \end{table}
@@ -500,11 +508,11 @@
 			\hline
 			Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
 			Роль & P\_ROLE & С(10) & \multicolumn{2}{l|}{обязательное поле} \\ \hline
-			Номер пользователя & P\_CLIENT & N(4) & \begin{tabular}[c]{@{}l@{}}
+			Номер пользователя & P\_CLIENT & INT & \begin{tabular}[c]{@{}l@{}}
 				внешний ключ   \\
 				(к Client)
 			\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
-			Номер курса & P\_COURSE & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Course)\end{tabular} &  \\ \hline
+			Номер курса & P\_COURSE & INT & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Course)\end{tabular} &  \\ \hline
 		\end{tabular}
 	\end{adjustbox}
 \end{table}
@@ -519,8 +527,8 @@
 		\begin{tabular}{|l|l|c|l|l|}
 			\hline
 			Содержание поля & Имя поля & Тип, длина & \multicolumn{2}{l|}{Примечания} \\ \hline
-			Номер пользователя & LR\_CLIENT & N(4) & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Client)\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
-			Номер лекции & LR\_NUMLECTURE & N(4) & \begin{tabular}[c]{@{}l@{}}
+			Номер пользователя & LR\_CLIENT & INT & \begin{tabular}[c]{@{}l@{}}внешний ключ \\ (к Client)\end{tabular} & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{составной}\\ \textbf{первичный} \\ \textbf{ключ}\end{tabular}} \\ \cline{1-4}
+			Номер лекции & LR\_NUMLECTURE & INT & \begin{tabular}[c]{@{}l@{}}
 				внешний ключ    \\
 				(к номер Lecture)
 			\end{tabular} &  \\ \hline
@@ -544,7 +552,7 @@
 	^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+$
 	\end{lstlisting}
 	
-	Заметим, что после после проверки могут быть сохранены неправильные варианты, однако данный фильтр пропустит все верные значения.
+	Заметим, что после проверки могут быть сохранены неправильные варианты, однако данный фильтр пропустит все верные значения.
 	Проверять почтовый адрес с помощью регулярных выражений не является лучшей практикой, более элегантное решение -- проверить адрес путем отправки письма на него;
 	\item  Продолжительность лекции и проверочного материала могут быть только положительными интервалами;
 	\item Максимальный балл проверочного материала есть неотрицательное число;
@@ -554,7 +562,7 @@
 	\item Пользователь может помечать прочитанными только те лекции, которые принадлежат курсу, в который пользователь записан с правами Student;
 	\item Пользователь может решать только те задания, которые принадлежат курсу, в который пользователь записан с правами Student;
 	\item Пользователь может проверять только те попытки, которые принадлежат курсу, в который пользователь записан с правами <<Teacher>> или <<Assistant>>;
-	\item Поля следующего элемента лекции и проверочного материала не могут быть одновременно заполненным.
+	%\item Поля следующего элемента лекции и проверочного материала не могут быть одновременно заполненным.
 \end{enumerate}
 
 Последние три ограничения разрывают два цикла в схеме базы данных.
