@@ -25,7 +25,7 @@ SELECT c_id,
        t_max,
        t_duration
 FROM testmaterial
-         JOIN lecture ON l_extend = t_id
+         JOIN lecture ON t_extend = l_id
          RIGHT JOIN Block ON l_block = b_id
          RIGHT JOIN course ON b_course = c_id
 WHERE c_visibility
